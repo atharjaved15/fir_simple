@@ -1,0 +1,135 @@
+{
+  "project_info": {
+    "project_number": "414854385769",
+    "firebase_url": "https://finalyearproject-2e28d.firebaseio.com",
+    "project_id": "finalyearproject-2e28d",
+    "storage_bucket": "finalyearproject-2e28d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414854385769:android:f21f21266c53331b4812f8",
+        "android_client_info": {
+          "package_name": "com.example.fir_simple"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414854385769-aec3bliqfugj76s9tr61kor5nafbmaro.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fir_simple",
+            "certificate_hash": "c788076eacf6ad2b75c92eda925555953c5cb59b"
+          }
+        },
+        {
+          "client_id": "414854385769-tne3o6eetsi40811n7602au5fqk0r750.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHqGqFX3vY8K9i7HfZopOCeSMl4AO7d6c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414854385769-tne3o6eetsi40811n7602au5fqk0r750.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "414854385769-cbrm7pmrveep97u5u7mt3rai43r1b601.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.interiordesignapp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414854385769:android:43b7c69d91b265154812f8",
+        "android_client_info": {
+          "package_name": "com.example.fyp_final"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414854385769-1dluvdnmh417ca0ld4kdb6hfjeoh8qna.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fyp_final",
+            "certificate_hash": "c788076eacf6ad2b75c92eda925555953c5cb59b"
+          }
+        },
+        {
+          "client_id": "414854385769-tne3o6eetsi40811n7602au5fqk0r750.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHqGqFX3vY8K9i7HfZopOCeSMl4AO7d6c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414854385769-tne3o6eetsi40811n7602au5fqk0r750.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "414854385769-cbrm7pmrveep97u5u7mt3rai43r1b601.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.interiordesignapp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414854385769:android:ec42ca9f8181ca4f4812f8",
+        "android_client_info": {
+          "package_name": "com.example.interior_design_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414854385769-tne3o6eetsi40811n7602au5fqk0r750.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHqGqFX3vY8K9i7HfZopOCeSMl4AO7d6c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414854385769-tne3o6eetsi40811n7602au5fqk0r750.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "414854385769-cbrm7pmrveep97u5u7mt3rai43r1b601.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.interiordesignapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
