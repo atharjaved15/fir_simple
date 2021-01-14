@@ -1,15 +1,26 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 class database {
   final String uid;
+
   database({this.uid});
 
-  final CollectionReference ref = FirebaseFirestore.instance.collection('user');
+  final fb = FirebaseDatabase.instance;
 
-  Future updateUserData(String email , String password) async {
-    return await ref.doc(await uid).set({
-      'Email': email,
-      'Password': password,
+  Future updateUserData(String email, String password) async {
+    final ref = fb.reference();
+    ref.child('UserId').set({
+      'id': uid,
+      'Name': email,
+      'Phone': password
     });
-
+    final f_ref = FirebaseFirestore.instance;
+    f_ref.collection('users').doc(uid).set(
+      {
+        "user": uid,
+        "Email":email,
+        "Password": password
+      }
+    );
   }
 }

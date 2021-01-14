@@ -1,5 +1,4 @@
 
-import 'package:fir_simple/adminLogin.dart';
 import 'package:fir_simple/adminPanel.dart';
 
 import 'UploadData.dart';
@@ -15,9 +14,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class loginScreen extends StatelessWidget {
+class adminLogin extends StatelessWidget {
 
-  loginScreen(){
+  adminLogin(){
     BuildContext context;
   }
 
@@ -37,7 +36,6 @@ class loginScreen extends StatelessWidget {
           backgroundColor: Colors.transparent,
           elevation: 10,
           toolbarHeight: 30.0,
-          leadingWidth: MediaQuery.of(context).size.width,
         ),
         backgroundColor: primaryColor,
         body: Container(
@@ -66,7 +64,7 @@ class loginScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
                 Text(
-                  'Enter your email and password below to continue to the Interior Design Mobile Application!',
+                  'Enter your email and password below to continue to the Interior Design Mobile Application as an Admin!',
                   textAlign: TextAlign.center,
                   style:
                   GoogleFonts.openSans(color: Colors.white, fontSize: 14),
@@ -77,48 +75,17 @@ class loginScreen extends StatelessWidget {
                 _buildTextField(nameController, Icons.account_circle, 'Username'),
                 SizedBox(height: 20),
                 _buildTextField(passwordController, Icons.lock, 'Password'),
-                SizedBox(height: 30),
+                SizedBox(height: 200),
                 MaterialButton(
                   elevation: 0,
                   minWidth: double.maxFinite,
                   height: 50,
-                  onPressed: () => logIn(context),
+                  onPressed: () => admin(context),
                   color: logoColor,
-                  child: Text('Login',
+                  child: Text('Login As Admin',
                       style: TextStyle(color: Colors.white, fontSize: 16)),
                   textColor: Colors.white,
                 ),
-                SizedBox(height: 20),
-                MaterialButton(
-                  elevation: 0,
-                  minWidth: double.maxFinite,
-                  height: 50,
-                  onPressed: () => registerUser(context),
-                  color: Colors.green,
-                  child: Text('Register',
-                      style: TextStyle(color: Colors.white, fontSize: 16)),
-                  textColor: Colors.white,
-                ),
-                SizedBox(height: 20),
-                MaterialButton(
-                  elevation: 0,
-                  minWidth: double.maxFinite,
-                  height: 50,
-                  onPressed: () => {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> adminLogin())),
-                  },
-                  color: Colors.purple,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(width: 10),
-                      Text('Admin Panel',
-                          style: TextStyle(color: Colors.white, fontSize: 16)),
-                    ],
-                  ),
-                  textColor: Colors.white,
-                ),
-                SizedBox(height: 100),
 
               ],
             ),
@@ -172,7 +139,7 @@ class loginScreen extends StatelessWidget {
   void _getPassword(){
     password = passwordController.text.toString();
   }
-  Future<void> signOutGoogle() async {
+  /*Future<void> signOutGoogle() async {
 
     Firebase.initializeApp();
 
@@ -180,8 +147,8 @@ class loginScreen extends StatelessWidget {
     await googleSignIn.signOut();
 
     print("User Signed Out");
-  }
-  Future<void> registerUser(context) async{
+  }*/
+ /* Future<void> registerUser(context) async{
 
     Firebase.initializeApp();
     _getEmail();
@@ -196,8 +163,8 @@ class loginScreen extends StatelessWidget {
       print(e.toString());
     }
     return null;
-  }
-  Future<void> signInWithGoogle() async {
+  }*/
+ /* Future<void> signInWithGoogle() async {
 
     BuildContext context;
 
@@ -232,8 +199,8 @@ class loginScreen extends StatelessWidget {
     }
 
     return null;
-  }
-  Future<void> logIn(context) async{
+  }*/
+  /*Future<void> logIn(context) async{
     try{
       Firebase.initializeApp();
       _getEmail();
@@ -247,25 +214,25 @@ class loginScreen extends StatelessWidget {
     }
     catch(error){
       Fluttertoast.showToast(
-          msg: error.toString(),
+        msg: error.toString(),
         timeInSecForIosWeb: 3,
       );
     }
 
 
-  }
+  }*/
 
   Future admin(BuildContext context) async {
-      _getPassword();
-      _getEmail();
-      if(email=='admin' && password =='admin') {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => adminPanel()));
+    _getPassword();
+    _getEmail();
+    if(email=='admin' && password =='admin') {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => adminPanel()));
 
-        Fluttertoast.showToast(msg: 'Logged In as Admin');
-      }
-      else{
-        Fluttertoast.showToast(msg: 'Please Enter Admin Email and Password');
-      }
+      Fluttertoast.showToast(msg: 'Logged In as Admin');
+    }
+    else{
+      Fluttertoast.showToast(msg: 'Please Enter Admin Email and Password');
+    }
   }
 }
 

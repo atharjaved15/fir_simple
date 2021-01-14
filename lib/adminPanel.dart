@@ -48,7 +48,7 @@ class _adminPanelState extends State<adminPanel> {
                   style:
                   GoogleFonts.openSans(color: Colors.white, fontSize: 14),
                 ),
-                SizedBox(height: 130),
+                SizedBox(height: 200),
                 MaterialButton(
                   elevation: 0,
                   minWidth: double.maxFinite,
@@ -62,18 +62,6 @@ class _adminPanelState extends State<adminPanel> {
                         context, MaterialPageRoute(builder: (_) => uploadData()));
                   },
                 ),
-                SizedBox(height: 20),
-                MaterialButton(
-                  elevation: 0,
-                  minWidth: double.maxFinite,
-                  height: 50,
-                  color: Colors.green,
-                  child: Text('Modify Products',
-                      style: TextStyle(color: Colors.white, fontSize: 16)),
-                  textColor: Colors.white,
-                ),
-                SizedBox(height: 20),
-                SizedBox(height: 100),
 
               ],
             ),
