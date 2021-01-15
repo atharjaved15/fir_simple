@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -14,11 +15,29 @@ class uploadData extends StatefulWidget {
 }
 
 class _uploadDataState extends State<uploadData> {
-  int pro=0;
+  int pro;
+  _uploadDataState(){
+    FirebaseDatabase firebaseDatabse = FirebaseDatabase.instance;
+    firebaseDatabse.reference().child('value').once().then((value) => {
+      pro=value.value,
+    });
+  }
   String productiD = "PRO-IDA-";
+  String name,pro_id,o_price,price,details;
   String nothing = "";
-  TextEditingController idController, priceController, nameController,detailController,o_priceController;
+  TextEditingController idController= new TextEditingController();
+  TextEditingController priceController= new TextEditingController();
+  TextEditingController nameController= new TextEditingController();
+  TextEditingController detailController= new TextEditingController();
+  TextEditingController o_priceController= new TextEditingController();
   int counter = 0;
+
+  void getValues(){
+    name = nameController.text;
+    price = priceController.text;
+    o_price = o_priceController.text;
+    details = detailController.text;
+  }
 
   final picker = ImagePicker();
   File image,image_3d ;
@@ -96,7 +115,7 @@ class _uploadDataState extends State<uploadData> {
                   ),
 
                   SizedBox(height: 20),
-                  _buildTextField(idController,Icons.format_list_numbered, 'Product ID',true,productiD),
+                  _buildTextField(idController,Icons.format_list_numbered, 'Product ID',true,productiD+pro.toString()),
                   SizedBox(
                     height: 20,
                   ),
@@ -106,6 +125,8 @@ class _uploadDataState extends State<uploadData> {
                   SizedBox(height: 20,),
                   _buildTextField(nameController,Icons.drive_file_rename_outline, 'Product Name',false,nothing),
                   SizedBox(height: 20,),
+                  _buildTextField(detailController,Icons.drive_file_rename_outline, 'Details',false,nothing),
+                  SizedBox(height: 120,),
                   MaterialButton(
                     elevation: 0,
                     minWidth: double.maxFinite,
@@ -163,27 +184,45 @@ class _uploadDataState extends State<uploadData> {
     });
   }
     Future submitData() async {
-    pro++;
-    String name,price;
-    name=nameController.toString();
-    price=priceController.toString();
+    getValues();
     if((idController.toString()==null && priceController.toString() ==null ) || idController.toString() == null || nameController.toString() == null || priceController.toString() == null || image ==null){
       Fluttertoast.showToast(msg: 'Kindly Enter Both Price and ID of the Product and also Image is required' );
     }
     else{
       Firebase.initializeApp();
+      FirebaseDatabase firebaseDatabase = FirebaseDatabase.instance;
+      var demo = firebaseDatabase.reference().child('value');
+      demo.set(pro);
+      var storage1 = FirebaseStorage.instance.ref('images_3D').child(productiD+pro.toString());
+      UploadTask uploadTask = storage1.putFile(image_3d);
+      String image_3d_path;
+      await uploadTask.whenComplete(() => null).then((value) async{
+        await value.ref.getDownloadURL().then((value) => {
+          image_3d_path=value,
+        });
+      });
+
       var storage = FirebaseStorage.instance.ref('images').child(productiD+pro.toString());
       storage.putFile(image).whenComplete(() => null).then((storageTask) async {
         FirebaseFirestore f_ref=FirebaseFirestore.instance;
         await storageTask.ref.getDownloadURL().then((value) => {
-              f_ref.collection('products').doc().set(
+              f_ref.collection('products').doc(productiD+pro.toString()).set(
             {
-              "product ID" : value,
+              "product ID" : productiD+pro.toString(),
               "price": price,
-              "name": name
+              "name": name,
+              "old price" : o_price,
+              "details": details,
+              "image_3d path" : image_3d_path,
+              "image_path": value,
             })
+
         });
         Fluttertoast.showToast(msg: 'Data Has been Submitted');
+        pro++;
+        firebaseDatabase.reference().child('demo').update({
+          'value': pro,
+        });
       });
 
     }
@@ -199,6 +238,9 @@ class _uploadDataState extends State<uploadData> {
       decoration: BoxDecoration(
           color: secondaryColor, borderRadius: BorderRadius.circular(10),border: Border.all(color: Colors.blue)),
       child: TextFormField(
+        onChanged: (text) {
+          controller.text=text;
+        },
         readOnly: readOnly,
         initialValue: initialValue+pro.toString() ,
         style: TextStyle(color: Colors.black87),

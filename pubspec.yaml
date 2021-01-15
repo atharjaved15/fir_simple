@@ -42,6 +42,7 @@ dev_dependencies:
   carousel_slider: any
   animated_splash_screen: ^1.0.1+2
   cloud_firestore: any
+  flutter_email_sender: ^4.0.0
   firebase_storage: any
   firebase_auth: any
   google_sign_in: ^4.5.6
