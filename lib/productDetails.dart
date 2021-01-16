@@ -1,14 +1,17 @@
-import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:fir_simple/userPanel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class productDetails extends StatelessWidget {
+import 'orders.dart';
 
+class productDetails extends StatelessWidget {
+  String longitude,latitude;
   String pid, name, l_details, o_price, n_price, img_path;
 
   productDetails({
@@ -29,6 +32,7 @@ class productDetails extends StatelessWidget {
             appBar: AppBar(
               actions: [
                   InkWell(
+                    onTap:() => shopNow,
                     child: Icon(
                       Icons.add_shopping_cart,
                       color: Colors.white,
@@ -118,6 +122,9 @@ class productDetails extends StatelessWidget {
   }
 
   shopNow(BuildContext context) async {
+    final geoposition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    longitude= geoposition.longitude.toString();
+    latitude = geoposition.latitude.toString();
     final f_ref = FirebaseFirestore.instance;
     String id = FirebaseAuth.instance.currentUser.uid.toString();
     f_ref.collection('cart').doc(id).collection('products').doc().set(
@@ -127,7 +134,11 @@ class productDetails extends StatelessWidget {
           "price" : n_price,
           "image_path" : img_path,
           "dateTime": DateTime.now().toString(),
+          "longitude" : longitude,
+          "latitude" : latitude,
         }
     );
+    Navigator.push(context, MaterialPageRoute(builder: (context)=> maps(latitude: latitude,Logitude: longitude,)));
+
   }
 }
