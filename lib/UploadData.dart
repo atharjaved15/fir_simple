@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -175,15 +176,16 @@ class _uploadDataState extends State<uploadData> {
       });
     }
   Future  chooseImage_3d() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-    setState(() {
-      if(pickedFile!=null)
-      {
-        image_3d = File(pickedFile.path);
-      }
-    });
+    FilePickerResult result = await FilePicker.platform.pickFiles();
+
+    if(result != null) {
+      image_3d = File(result.files.single.path);
+    } else {
+      // User canceled the picker
+    }
   }
     Future submitData() async {
+    pro++;
     getValues();
     if((idController.toString()==null && priceController.toString() ==null ) || idController.toString() == null || nameController.toString() == null || priceController.toString() == null || image ==null){
       Fluttertoast.showToast(msg: 'Kindly Enter Both Price and ID of the Product and also Image is required' );
@@ -206,7 +208,7 @@ class _uploadDataState extends State<uploadData> {
       storage.putFile(image).whenComplete(() => null).then((storageTask) async {
         FirebaseFirestore f_ref=FirebaseFirestore.instance;
         await storageTask.ref.getDownloadURL().then((value) => {
-              f_ref.collection('products').doc(productiD+pro.toString()).set(
+              f_ref.collection('products').doc().set(
             {
               "product ID" : productiD+pro.toString(),
               "price": price,

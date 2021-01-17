@@ -1,3 +1,5 @@
+import 'package:fir_simple/AR.dart';
+import 'package:fir_simple/cart.dart';
 import 'package:fir_simple/userPanel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +14,10 @@ import 'orders.dart';
 
 class productDetails extends StatelessWidget {
   String longitude,latitude;
-  String pid, name, l_details, o_price, n_price, img_path;
+  String pid, name, l_details, o_price, n_price, img_path,img_3d_path;
 
   productDetails({
+    @required this.img_3d_path,
     @required this.pid,
     @required this.name,
     @required this.l_details,
@@ -31,21 +34,37 @@ class productDetails extends StatelessWidget {
         home: Scaffold(
             appBar: AppBar(
               actions: [
-                  InkWell(
-                    onTap:() => shopNow,
-                    child: Icon(
-                      Icons.add_shopping_cart,
-                      color: Colors.white,
-                    ),
-                  ),
-                RawMaterialButton(
-                    child: Icon(
-                      Icons.arrow_back,
-                      color: Colors.white,
-                    ),
-                    onPressed:(){ Navigator.push(context, MaterialPageRoute(builder: (context) => userPanel()));}
+                 Row(
+                   children: [
+                     InkWell(
+                       onTap:() => {
+                         Navigator.push(context, MaterialPageRoute(builder: (context) => cart())),
+                       },
+                       child: Icon(
+                         Icons.add_shopping_cart,
+                         color: Colors.white,
+                       ),
+                     ),
+                     SizedBox(width: 20,),
+                     InkWell(
+                       onTap: ()=>{
+                         Navigator.push(context, MaterialPageRoute(builder: (context) => AR(image_3d_path: img_3d_path,))),
+                       },
+                       child:
+                       Icon(
+                         Icons.camera_rear_outlined,
+                       ),
+                     ),
+                     RawMaterialButton(
+                         child: Icon(
+                           Icons.arrow_back,
+                           color: Colors.white,
+                         ),
+                         onPressed:(){ Navigator.push(context, MaterialPageRoute(builder: (context) => userPanel()));}
 
-                ),
+                     ),
+                   ],
+                 )
               ],
               backgroundColor: Colors.transparent,
               elevation: 10,
@@ -59,69 +78,84 @@ class productDetails extends StatelessWidget {
                     .width,
               ),
               title: Center(child: Text(
-                'Product Details', style: TextStyle(color: Colors.white),)),
+                'Details', style: TextStyle(color: Colors.white),)),
             ),
             backgroundColor: Colors.black87,
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  height: MediaQuery
-                      .of(context)
-                      .size
-                      .height * .45,
-                  width: double.maxFinite,
-                  child: Image.network(img_path,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                SizedBox(height: 50,),
-                Container(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 05),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-
-                            Text(name, textAlign:TextAlign.left , style: TextStyle(fontWeight:FontWeight.bold,fontSize: 40, color: Colors.white,),),
-                            Text(l_details , textAlign:TextAlign.center, style: TextStyle(fontSize: 20, color: Colors.white),),
-                          ],
-                        ),
-
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-
-                            Text(o_price + '\$' , textAlign:TextAlign.center,  style: TextStyle(fontSize: 20, color: Colors.white, decoration:TextDecoration.lineThrough,fontStyle: FontStyle.italic),),
-                            Text(n_price + '\$', textAlign:TextAlign.left , style: TextStyle(fontWeight:FontWeight.bold,fontSize: 40, color: Colors.greenAccent),),
-                            Text(FirebaseAuth.instance.currentUser.email.toString(), style: TextStyle(color: Colors.white),),
-                          ],
-                        ),
-                      ],
+            body: Container(
+              height: double.maxFinite,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    height: MediaQuery
+                        .of(context)
+                        .size
+                        .height * .45,
+                    width: double.maxFinite,
+                    child: Image.network(img_path,
+                      fit: BoxFit.cover,
                     ),
                   ),
-                ),
-                MaterialButton(
-                  elevation: 0,
-                  minWidth: double.maxFinite,
-                  height: 50,
-                  onPressed: () => shopNow(context),
-                  color: Colors.green,
-                  child: Text('Shop Now',
-                      style: TextStyle(color: Colors.white, fontSize: 16)),
-                  textColor: Colors.white,
-                ),
+                  SizedBox(height: 10,),
+                  Container(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 05),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
 
-              ],
+                                Text(name, textAlign:TextAlign.left , style: TextStyle(fontWeight:FontWeight.bold,fontSize: 40, color: Colors.white,),),
+                                Text(l_details , textAlign:TextAlign.center, style: TextStyle(fontSize: 20, color: Colors.white),),
+                              ],
+                            ),
+                          ),
+
+                          Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+
+                                Text(o_price + '\$' , textAlign:TextAlign.center,  style: TextStyle(fontSize: 20, color: Colors.white, decoration:TextDecoration.lineThrough,fontStyle: FontStyle.italic),),
+                                Text(n_price + '\$', textAlign:TextAlign.left , style: TextStyle(fontWeight:FontWeight.bold,fontSize: 40, color: Colors.greenAccent),),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  MaterialButton(
+                    elevation: 0,
+                    minWidth: double.maxFinite,
+                    height: 50,
+                    onPressed: () => shopNow(context),
+                    color: Colors.green,
+                    child: Text('Shop Now',
+                        style: TextStyle(color: Colors.white, fontSize: 16)),
+                    textColor: Colors.white,
+                  ),
+                  MaterialButton(
+                    elevation: 0,
+                    minWidth: double.maxFinite,
+                    height: 50,
+                    onPressed: () => addtoCart(context),
+                    color: Colors.blueAccent,
+                    child: Text('Add to Cart',
+                        style: TextStyle(color: Colors.white, fontSize: 16)),
+                    textColor: Colors.white,
+                  ),
+
+                ],
+              ),
             )
         )
     );
   }
-
-  shopNow(BuildContext context) async {
+  addtoCart(BuildContext context) async {
     final geoposition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     longitude= geoposition.longitude.toString();
     latitude = geoposition.latitude.toString();
@@ -138,7 +172,27 @@ class productDetails extends StatelessWidget {
           "latitude" : latitude,
         }
     );
-    Navigator.push(context, MaterialPageRoute(builder: (context)=> maps(latitude: latitude,Logitude: longitude,)));
+
+  }
+
+  shopNow(BuildContext context) async {
+    final geoposition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    longitude= geoposition.longitude.toString();
+    latitude = geoposition.latitude.toString();
+    final f_ref = FirebaseFirestore.instance;
+    String id = FirebaseAuth.instance.currentUser.uid.toString();
+    f_ref.collection('orders').doc('order').collection('products').doc().set(
+        {
+          "user ID" : id,
+          "product id": pid,
+          "name": name,
+          "price" : n_price,
+          "image_path" : img_path,
+          "dateTime": DateTime.now().toString(),
+          "longitude" : longitude,
+          "latitude" : latitude,
+        }
+    );
 
   }
 }

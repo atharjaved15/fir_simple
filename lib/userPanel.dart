@@ -49,13 +49,6 @@ class _userPanelState extends State<userPanel> {
                 ),
               ),
               ListTile(
-                title: Text('Add Your Address', style: TextStyle(fontSize: 20),),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                },
-              ),
-              ListTile(
                 title: Text('My Cart', style: TextStyle(fontSize: 20),),
                 onTap: () {
                   // Update the state of the app.
@@ -183,7 +176,7 @@ class _userPanelState extends State<userPanel> {
                             return ListView(
                                 children: documents
                                     .map((doc) => InkWell(
-                                 onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => productDetails(pid: doc['product ID'],name: doc['name'],img_path: doc['image_path'].toString(),l_details: doc['details'],n_price: doc['price'],o_price: doc['old price']))),
+                                 onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => productDetails(pid: doc['product ID'],name: doc['name'],img_path: doc['image_path'].toString(),l_details: doc['details'],n_price: doc['price'],o_price: doc['old price'],img_3d_path: doc['image_3d path'],))),
                                       child: Container(
                                   height: 100,
                                             child: Column(
@@ -199,7 +192,7 @@ class _userPanelState extends State<userPanel> {
                                                           width: 100,
                                                           child: Image.network(doc['image_path']),
                                                         ),
-                                                        SizedBox(width: 10,),
+                                                        SizedBox(width: 30,),
                                                         Container(
                                                           child: Column(
                                                             mainAxisAlignment: MainAxisAlignment.start,
@@ -208,11 +201,11 @@ class _userPanelState extends State<userPanel> {
                                                               Text(doc['product ID'] , textAlign:TextAlign.left , style: TextStyle(fontSize: 10, color: Colors.white, fontStyle: FontStyle.italic),),
                                                               Text(doc['name'] , textAlign:TextAlign.center, style: TextStyle(fontWeight:FontWeight.bold,fontSize: 20, color: Colors.white),),
                                                               SizedBox(height: 5,),
-                                                              Text(doc['details'] , textAlign:TextAlign.left , style: TextStyle(fontSize: 10, color: Colors.white,),),
+                                                            //  Text(doc['details'] , textAlign:TextAlign.left , style: TextStyle(fontSize: 10, color: Colors.white,),),
                                                             ],
                                                           ),
                                                         ),
-                                                        SizedBox(width: 130,),
+                                                        SizedBox(width: 50,),
                                                         Container(
                                                           child: Column(
                                                             mainAxisAlignment: MainAxisAlignment.center,
@@ -233,8 +226,10 @@ class _userPanelState extends State<userPanel> {
                                               ],
                                             )),
                                     )).toList());
-                          } else if (snapshot.hasError) {
-                            return Text('It\'s Error!');
+                          } else {
+                            return Center(child: Text(
+                              'Loading'
+                            ),);
                           }
                         }),
                         ),

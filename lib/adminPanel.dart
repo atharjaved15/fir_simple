@@ -1,6 +1,8 @@
 import 'package:fir_simple/UploadData.dart';
+import 'package:fir_simple/orders.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 
 class adminPanel extends StatefulWidget {
@@ -60,6 +62,21 @@ class _adminPanelState extends State<adminPanel> {
                   onPressed: (){
                     Navigator.push(
                         context, MaterialPageRoute(builder: (_) => uploadData()));
+                  },
+                ),
+                SizedBox(height: 20,),
+                MaterialButton(
+                  elevation: 0,
+                  minWidth: double.maxFinite,
+                  height: 50,
+                  color: Colors.purpleAccent,
+                  child: Text('Manage Orders',
+                      style: TextStyle(color: Colors.white, fontSize: 16)),
+                  textColor: Colors.white,
+                  onPressed: (){
+                    Firebase.initializeApp();
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (_) => orders()));
                   },
                 ),
 
