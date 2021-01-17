@@ -2,10 +2,12 @@ import 'package:fir_simple/userPanel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cube/flutter_cube.dart';
 import 'package:camera/camera.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 List<CameraDescription> cameras;
 
 Future<void> main() async {
+  Firebase.initializeApp();
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
 }
@@ -28,7 +30,7 @@ class _ARState extends State<AR> {
   void initState() {
     main();
     object = Object(
-      fileName: widget.image_3d_path,
+      fileName: 'images/attach-demo-chair.obj',
       lighting: true,
       visiable: true,
     );
@@ -51,6 +53,19 @@ class _ARState extends State<AR> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
           appBar: AppBar(
+            actions: [
+              RawMaterialButton(
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => userPanel()));
+                  }
+
+              ),
+            ],
             backgroundColor: Colors.transparent,
             elevation: 10,
             toolbarHeight: 50.0,
@@ -62,8 +77,8 @@ class _ARState extends State<AR> {
                   .size
                   .width,
             ),
-            title: Center(child: Text(
-              'Details', style: TextStyle(color: Colors.white),)),
+            title: Center(
+                child: Text('My Cart', style: TextStyle(color: Colors.white),)),
           ),
           backgroundColor: Colors.black87,
           body: !controller.value.isInitialized

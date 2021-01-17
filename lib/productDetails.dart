@@ -1,5 +1,6 @@
 import 'package:fir_simple/AR.dart';
 import 'package:fir_simple/cart.dart';
+import 'package:fir_simple/selectAt.dart';
 import 'package:fir_simple/userPanel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,7 @@ class productDetails extends StatelessWidget {
                      SizedBox(width: 20,),
                      InkWell(
                        onTap: ()=>{
-                         Navigator.push(context, MaterialPageRoute(builder: (context) => AR(image_3d_path: img_3d_path,))),
+                         Navigator.push(context, MaterialPageRoute(builder: (context) => selectAr())),
                        },
                        child:
                        Icon(
@@ -156,6 +157,7 @@ class productDetails extends StatelessWidget {
     );
   }
   addtoCart(BuildContext context) async {
+    showAlertDialog1(context);
     final geoposition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     longitude= geoposition.longitude.toString();
     latitude = geoposition.latitude.toString();
@@ -176,6 +178,7 @@ class productDetails extends StatelessWidget {
   }
 
   shopNow(BuildContext context) async {
+    showAlertDialog(context);
     final geoposition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     longitude= geoposition.longitude.toString();
     latitude = geoposition.latitude.toString();
@@ -193,6 +196,61 @@ class productDetails extends StatelessWidget {
           "latitude" : latitude,
         }
     );
+
+  }
+
+  showAlertDialog(BuildContext context) {
+
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () { },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Order Placed"),
+      content: Text("Thank You for Placing the Order.."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+
+
+}
+  showAlertDialog1(BuildContext context) {
+
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () { },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Items Added to the Cart"),
+      content: Text("Thank You ! Your Items have been added to the cart!"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+
 
   }
 }

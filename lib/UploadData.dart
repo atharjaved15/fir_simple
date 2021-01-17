@@ -41,7 +41,9 @@ class _uploadDataState extends State<uploadData> {
   }
 
   final picker = ImagePicker();
-  File image,image_3d ;
+  File image ;
+  File image_3d;
+
   CollectionReference imgRef;
   String url;
   Color primaryColor = Colors.black87;
@@ -90,13 +92,7 @@ class _uploadDataState extends State<uploadData> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 120,),
-                        image_3d != null ? Image.file(
-                          image_3d,
-                          fit: BoxFit.cover,
-                          height: 100,
-                          width: 100,
-                        ): Container(
+                        Container(
                           height: 100,
                           width: 100,
                           child: InkWell(
@@ -109,7 +105,6 @@ class _uploadDataState extends State<uploadData> {
                             ),
                           ),
                         ),
-
                       ],
 
                     ),
@@ -176,8 +171,9 @@ class _uploadDataState extends State<uploadData> {
       });
     }
   Future  chooseImage_3d() async {
-    FilePickerResult result = await FilePicker.platform.pickFiles();
-
+    FilePickerResult result = await FilePicker.platform.pickFiles(
+      allowMultiple: false,
+    );
     if(result != null) {
       image_3d = File(result.files.single.path);
     } else {
